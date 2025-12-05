@@ -851,23 +851,31 @@ body:not(.home-page) header {
 
     .nav-links {
         position: fixed;
-        left: -100%;
+        left: 0; /* keep at 0 and hide with transform/visibility to avoid painting a solid bg when hidden */
         top: 56px;
         flex-direction: column;
-        background: #000;
+        background: transparent; /* no bg when closed */
         width: 100%;
-        height: 100vh;
+        height: auto;
+        max-height: calc(100vh - 56px);
         text-align: left;
-        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.2s;
+        transform: translateX(-100%);
         padding: 1.5rem 0 0 0;
         gap: 0;
         z-index: 1000;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        pointer-events: none; /* ignore clicks when closed */
+        visibility: hidden;
     }
 
     .nav-links.active {
-        left: 0;
+        transform: translateX(0);
+        background: rgba(0, 0, 0, 0.95); /* show dark bg only when open */
+        height: calc(100vh - 56px);
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .nav-links li {
