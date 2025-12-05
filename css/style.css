@@ -9,6 +9,7 @@
     --light-bg: #f8f9fa;
     --dark-text: #333;
     --white-text: #fff;
+    --white-move: #eeeded;
 }
 
 * {
@@ -21,7 +22,7 @@ body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--dark-text);
-    background-color: var(--white-text);
+    background-color: var(--white-move);
 }
 
 .container {
@@ -160,7 +161,7 @@ header .container {
     border-radius: 40px;
     padding: 22px;
     padding-top: 120px;
-    min-height: 95vh;
+    min-height: 90vh;
 }
 
 #hero .hero-container img {
@@ -228,7 +229,6 @@ header .container {
 #features {
     text-align: center;
     padding: 16px;
-    margin-top: -2rem;
 }
 
 .features-grid {
@@ -238,6 +238,10 @@ header .container {
     margin-top: 3rem;
 }
 
+#features h2{
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
 .feature-card {
     padding: 2rem;
     border-radius: 10px;
@@ -886,7 +890,7 @@ body:not(.home-page) header {
     display: flex;
     align-items: center;
     background-color: #f0f0f0;
-    border-radius: 20px;
+    border-radius: 50px;
     padding: 5px;
 }
 
@@ -919,7 +923,9 @@ body:not(.home-page) header {
     background-position: center;
     color: white;
     text-align: center;
-    padding: 100px 0;
+    border-radius: 30px;
+    margin: 16px;
+     padding: 100px 0;
 }
 
 .hero-services h1 {
@@ -942,7 +948,7 @@ body:not(.home-page) header {
     z-index: 99;
     border: none;
     outline: none;
-    background-color: #007bff;
+    background-color: #07bfcc;
     color: white;
     cursor: pointer;
     padding: 10px;
@@ -959,17 +965,17 @@ body:not(.home-page) header {
 
 /* Styles for the cookie banner */
 #cookie-banner {
-    display: none;
+    width: 400px;
+    display: flex;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #333;
-    color: white;
-    padding: 15px;
+    bottom: 30px;
+    left: 30px;
+    background-color: #dbf8f1;
+    color: black;
+    padding: 20px;
     text-align: center;
     z-index: 1000;
-    display: flex;
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -977,29 +983,37 @@ body:not(.home-page) header {
 
 #cookie-banner p {
     margin: 0;
-    margin-right: 20px;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    width: 100%;
 }
 
 #cookie-banner button {
-    background-color: #007bff;
+    background-color: #2a9d8f;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 18px;
     border-radius: 5px;
     cursor: pointer;
     margin: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
 }
 
 #cookie-banner button:hover {
-    background-color: #0056b3;
+    background-color: #1f7a6a;
 }
 
 
 /* Styles for the about page hero section */
 .hero-about {
-    background-color: #2a9d8f;
-    color: white;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/young-women.png');
+    background-size: cover;
+    background-position: center;
+     color: white;
     text-align: center;
+    border-radius: 30px;
+    margin: 16px;
     padding: 80px 0;
 }
 
@@ -1111,57 +1125,169 @@ body:not(.home-page) header {
 
 /* Styles for the contact page hero section */
 .hero-contact {
-    background-color: #007bff;
-    color: white;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/young-women.png');
+    color: var(--dark-text);
+     background-size: cover;
+    background-position: center;
     text-align: center;
-    padding: 80px 0;
+    padding: 100px 0;
+     border-radius: 30px;
+    margin: 16px;
 }
 
 .hero-contact h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 20px;
+    font-weight: 700;
+    color: var(--white-move);
 }
 
 .hero-contact p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     max-width: 800px;
     margin: 0 auto;
+    color: #e8e4e4;
+    line-height: 1.8;
 }
 
 /* Styles for the contact form section */
 .contact-form-section {
     padding: 80px 0;
+    background-color: white;
 }
 
 .contact-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
+    gap: 60px;
+    align-items: start;
+}
+
+.contact-form {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.contact-form h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: var(--dark-text);
+}
+
+.contact-info {
+    padding: 40px;
+    background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+    border-radius: 10px;
+}
+
+.contact-info h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: var(--dark-text);
+}
+
+.contact-info p {
+    margin-bottom: 25px;
+    color: #666;
+    line-height: 1.8;
+}
+
+.contact-info a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark-text);
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
 }
 
 #map {
     width: 100%;
     height: 300px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
+    background-color: #e8e8e8;
+    border-radius: 8px;
     margin-top: 20px;
+}
+
+.info-item {
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-item:last-of-type {
+    border-bottom: none;
+}
+
+.info-item h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+}
+
+/* Responsive Design for Contact Page */
+@media (max-width: 768px) {
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .hero-contact {
+        padding: 60px 0;
+        margin-top: 120px;
+    }
+    
+    .hero-contact h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-contact p {
+        font-size: 1rem;
+    }
+    
+    .contact-form,
+    .contact-info {
+        padding: 30px;
+    }
+    
+    .contact-form h2,
+    .contact-info h2 {
+        font-size: 1.5rem;
+    }
 }
 
 
@@ -1339,7 +1465,7 @@ body:not(.home-page) header {
 .testimonial-card {
     background-color: white;
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 30px;
 }
 
 .testimonial-card p {
@@ -1349,7 +1475,7 @@ body:not(.home-page) header {
 
 .testimonial-card h4 {
     text-align: right;
-    color: #007bff;
+    color: #686869;
 }
 
 

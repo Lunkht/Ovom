@@ -49,27 +49,40 @@
                         <h2>Envoyez-nous un Message</h2>
                         <form id="contactForm">
                             <div class="form-group">
-                                <label for="name">Nom</label>
-                                <input type="text" id="name" name="name" required>
+                                <label for="name">Nom Complet</label>
+                                <input type="text" id="name" name="name" placeholder="Jean Dupont" required>
                             </div>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" required>
+                                <label for="email">Adresse Email</label>
+                                <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Sujet</label>
+                                <input type="text" id="subject" name="subject" placeholder="Objet de votre message" required>
                             </div>
                             <div class="form-group">
                                 <label for="message">Message</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
+                                <textarea id="message" name="message" rows="5" placeholder="Votre message ici..." required></textarea>
                             </div>
-                            <div id="success-message" style="color: green; margin: 10px 0; display: none;">Message envoyé avec succès !</div>
-                            <div id="error-message" style="color: red; margin: 10px 0; display: none;"></div>
-                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                            <div id="success-message" style="color: #2a9d8f; margin: 15px 0; padding: 12px; background-color: #e8f5f3; border-radius: 6px; display: none;">✓ Message envoyé avec succès !</div>
+                            <div id="error-message" style="color: #d32f2f; margin: 15px 0; padding: 12px; background-color: #ffebee; border-radius: 6px; display: none;"></div>
+                            <button type="submit" class="btn btn-primary">Envoyer le Message</button>
                         </form>
                     </div>
                     <div class="contact-info">
                         <h2>Nos Coordonnées</h2>
-                        <p><strong>Adresse :</strong> 123 Rue de l'Innovation, Dakar, 10200, Sénégal</p>
-                        <p><strong>Email :</strong> <a href="mailto:contact@ovom.com">contact@ovom.com</a></p>
-                        <p><strong>Téléphone :</strong> +221 33 800 00 00</p>
+                        <div class="info-item">
+                            <h4>📍 Adresse</h4>
+                            <p>123 Rue de l'Innovation<br>Dakar, 10200<br>Sénégal</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>✉️ Email</h4>
+                            <p><a href="mailto:contact@ovom.com">contact@ovom.com</a></p>
+                        </div>
+                        <div class="info-item">
+                            <h4>📞 Téléphone</h4>
+                            <p><a href="tel:+221338000000">+221 33 800 00 00</a></p>
+                        </div>
                         <div id="map"></div>
                     </div>
                 </div>
