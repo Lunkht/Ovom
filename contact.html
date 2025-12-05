@@ -133,7 +133,24 @@
     </button>
     <script src="js/main.js"></script>
     <script type="module">
-        import { supabase } from './js/supabase-config.js';
+        import { supabase, testConnection } from './js/supabase-config.js';
+
+        // Run a quick connectivity test and show any diagnostic in console
+        (async () => {
+            try {
+                const res = await testConnection();
+                console.log('Supabase connectivity test:', res);
+                if (!res.ok) {
+                    const errorMessage = document.getElementById('error-message');
+                    if (errorMessage) {
+                        errorMessage.textContent = 'Erreur de connexion Supabase (diagnostic) : ' + res.error;
+                        errorMessage.style.display = 'block';
+                    }
+                }
+            } catch (e) {
+                console.warn('Erreur diagnostic Supabase', e);
+            }
+        })();
 
         document.getElementById('contactForm').addEventListener('submit', async (e) => {
             e.preventDefault();
