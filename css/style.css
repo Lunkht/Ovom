@@ -797,7 +797,7 @@ body:not(.home-page) header {
         padding: 0 1rem;
         height: 56px;
         box-sizing: border-box;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(105, 104, 104, 0.663);
     }
 
     .logo {
