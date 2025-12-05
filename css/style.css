@@ -48,7 +48,7 @@ header {
     left: 0;
     right: 0;
     z-index: 1000;
-    width: 100% auto;
+    width: 100%;
     padding: 0;
     transition: all 0.3s ease;
 }
@@ -64,6 +64,7 @@ header .container {
     max-width: 1200px;
     width: 90%;
     margin: 0 auto;
+    transition: all 0.3s ease;
 }
 
 .logo {
@@ -73,10 +74,54 @@ header .container {
     text-decoration: none;
     transition: transform 0.3s ease;
     letter-spacing: 1px;
+    flex-shrink: 0;
 }
 
 .logo:hover {
     transform: scale(1.05);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 2rem;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white-text);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.search-bar input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-bar input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.search-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.search-bar button:hover {
+    transform: scale(1.1);
 }
 
 .mobile-menu-toggle {
@@ -86,15 +131,29 @@ header .container {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
+    gap: 4px;
+    flex-shrink: 0;
 }
 
 .mobile-menu-toggle span {
     width: 25px;
     height: 3px;
     background-color: var(--white-text);
-    margin: 3px 0;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     border-radius: 3px;
+    display: block;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(10px, 10px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
 }
 
 .nav-links {
@@ -102,6 +161,8 @@ header .container {
     display: flex;
     align-items: center;
     gap: 2rem;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links li {
@@ -129,14 +190,16 @@ header .container {
 }
 
 .nav-links .btn-secondary {
-    background: rgba(139, 92, 246, 0.8);
+    background: rgba(42, 157, 143, 0.8);
     color: var(--white-text);
     border: none;
+    transition: all 0.3s ease;
 }
 
 .nav-links .btn-secondary:hover {
-    background: rgba(139, 92, 246, 1);
+    background: rgba(42, 157, 143, 1);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(42, 157, 143, 0.3);
 }
 
 /* Hero Section */
@@ -719,6 +782,25 @@ body:not(.home-page) header {
 
 /* Responsive */
 @media (max-width: 768px) {
+    header {
+        top: 0;
+    }
+
+    header .container {
+        width: 100%;
+        border-radius: 0;
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.4rem;
+    }
+
+    .search-bar {
+        display: none;
+    }
+
     .mobile-menu-toggle {
         display: flex;
     }
@@ -726,13 +808,17 @@ body:not(.home-page) header {
     .nav-links {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 60px;
         flex-direction: column;
-        background-color: var(--white-text);
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 100%);
         width: 100%;
         text-align: center;
-        transition: 0.3s;
+        transition: left 0.3s ease;
         padding: 2rem 0;
+        gap: 0;
+        z-index: 999;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
     }
 
     .nav-links.active {
@@ -740,7 +826,40 @@ body:not(.home-page) header {
     }
 
     .nav-links li {
-        margin: 1rem 0;
+        margin: 0;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .nav-links .btn {
+        margin: 1rem auto;
+        display: inline-block;
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .nav-links .btn-secondary {
+        background: rgba(42, 157, 143, 0.9);
+        width: 90%;
+        margin: 1rem auto;
+    }
+
+    body:not(.home-page) {
+        padding-top: 60px;
+    }
+
+    #hero {
+        margin-top: 60px;
     }
 
     #hero .hero-container {
