@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue d'Ensemble du Projet - Ovom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #2a9d8f;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            color: #264653;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #2a9d8f;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .card h3 {
+            color: #2a9d8f;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card p {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+        }
+        
+        .file-list {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .file-list ul {
+            list-style: none;
+        }
+        
+        .file-list li {
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .file-list li:before {
+            content: "📄";
+        }
+        
+        .folder:before {
+            content: "📁" !important;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: auto;
+        }
+        
+        .status.ready {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.config {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .quick-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            background: #2a9d8f;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #238276;
+        }
+        
+        .btn.secondary {
+            background: #264653;
+        }
+        
+        .btn.secondary:hover {
+            background: #1a3a47;
+        }
+        
+        .firebase-info {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .firebase-info h3 {
+            color: #d63031;
+            margin-bottom: 1rem;
+        }
+        
+        .firebase-info ul {
+            list-style: none;
+        }
+        
+        .firebase-info li {
+            padding: 0.5rem 0;
+            color: #2d3436;
+        }
+        
+        .firebase-info strong {
+            color: #d63031;
+        }
+    </style>
+</head>
+<body>
+    <main class="project-overview-page">
+        <div class="container">
+            <h1 class="overview-title">Vue d'Ensemble du Projet Ovom</h1>
+            <p class="overview-subtitle">Une plateforme de santé connectée, propulsée par des technologies modernes.</p>
+
+            <section class="overview-section">
+                <h2 class="section-title">Technologies Clés</h2>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h3>Frontend</h3>
+                        <ul>
+                            <li>HTML5, CSS3, JavaScript</li>
+                            <li>Design Responsive</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h3>Backend & Base de Données</h3>
+                        <ul>
+                            <li>Firebase Authentication</li>
+                            <li>Firebase Firestore</li>
+                            <li>Supabase (alternative/complément)</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h3>Déploiement</h3>
+                        <ul>
+                            <li>Firebase Hosting</li>
+                            <li>Netlify / Vercel (options)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="overview-section">
+                <h2 class="section-title">Fonctionnalités Principales</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <h4>Authentification Utilisateur</h4>
+                        <p>Inscription, connexion, gestion de profil sécurisée.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Recherche de Services de Santé</h4>
+                        <p>Pharmacies de garde, hôpitaux, cliniques à proximité.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Téléconsultation</h4>
+                        <p>Mise en relation avec des professionnels de santé en ligne.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Dossier Médical Personnel</h4>
+                        <p>Accès sécurisé à l'historique médical et aux traitements.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="overview-section">
+                <h2 class="section-title">Structure du Projet</h2>
+                <div class="project-structure">
+                    <div class="structure-item">
+                        <h4>Pages HTML</h4>
+                        <ul>
+                            <li><code>index.html</code> (Accueil)</li>
+                            <li><code>services.html</code> (Nos Services)</li>
+                            <li><code>about.html</code> (À Propos)</li>
+                            <li><code>contact.html</code> (Contact)</li>
+                            <li><code>login.html</code> (Connexion)</li>
+                            <li><code>signup.html</code> (Inscription)</li>
+                            <li><code>dashboard.html</code> (Tableau de Bord Utilisateur)</li>
+                            <li><code>project-overview.html</code> (Cette page)</li>
+                        </ul>
+                    </div>
+                    <div class="structure-item">
+                        <h4>Fichiers CSS</h4>
+                        <ul>
+                            <li><code>css/style.css</code> (Styles globaux et spécifiques)</li>
+                        </ul>
+                    </div>
+                    <div class="structure-item">
+                        <h4>Fichiers JavaScript</h4>
+                        <ul>
+                            <li><code>js/main.js</code> (Logique principale, UI/UX)</li>
+                            <li><code>js/auth.js</code> (Gestion de l'authentification)</li>
+                            <li><code>js/auth-guard.js</code> (Protection des routes)</li>
+                            <li><code>js/supabase-config.js</code> (Configuration Supabase)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="overview-section">
+                <h2 class="section-title">Prochaines Étapes & Améliorations</h2>
+                <ul class="roadmap-list">
+                    <li>Intégration de l'API de géolocalisation pour les pharmacies/hôpitaux.</li>
+                    <li>Développement d'une fonctionnalité de prise de rendez-vous en ligne.</li>
+                    <li>Amélioration de l'interface utilisateur pour les professionnels de santé.</li>
+                    <li>Ajout de notifications personnalisées pour les traitements et rappels.</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>Ovom</h3>
+                <p>Notre mission est de rendre l'accès aux soins de santé plus simple, plus rapide et plus efficace pour tous.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Liens Rapides</h4>
+                <ul>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">À propos</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="project-overview.html">Vue d'ensemble du projet</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><img src="https://img.icons8.com/ios-filled/50/000000/facebook.png" alt="Facebook"></a>
+                    <a href="#" aria-label="Twitter"><img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter"></a>
+                    <a href="#" aria-label="LinkedIn"><img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ovom. Tous droits réservés.</p>
+        </div>
+    </footer>
+    <div id="cookie-banner">
+        <p>
+            Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre <a href="#">Politique de cookies</a>.
+        </p>
+        <div>
+            <button id="cookie-accept">Accepter</button>
+            <button id="cookie-decline">Refuser</button>
+        </div>
+    </div>
+    <button id="scrollTopBtn" title="Go to top">
+        <img src="https://img.icons8.com/ios-filled/50/000000/up.png" alt="Scroll to top">
+    </button>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple - Supabase</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <main class="test-page">
+        <div class="container">
+            <h1 class="test-title">🔍 Test Simple Supabase</h1>
+            <p class="test-subtitle">Vérifiez rapidement la connexion et l'accès aux tables de votre base de données Supabase.</p>
+
+            <div class="test-actions">
+                <button onclick="testConnection()" class="btn btn-primary">Tester la Connexion</button>
+                <button onclick="testTables()" class="btn btn-secondary">Tester les Tables</button>
+            </div>
+
+            <div id="results" class="test-results">
+                <div class="result-item info">Cliquez sur un bouton pour lancer un test.</div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>Ovom</h3>
+                <p>Notre mission est de rendre l'accès aux soins de santé plus simple, plus rapide et plus efficace pour tous.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Liens Rapides</h4>
+                <ul>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">À propos</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="project-overview.html">Vue d'ensemble du projet</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><img src="https://img.icons8.com/ios-filled/50/000000/facebook.png" alt="Facebook"></a>
+                    <a href="#" aria-label="Twitter"><img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter"></a>
+                    <a href="#" aria-label="LinkedIn"><img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ovom. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <div id="cookie-banner">
+        <p>
+            Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre <a href="#">Politique de cookies</a>.
+        </p>
+        <div>
+            <button id="cookie-accept">Accepter</button>
+            <button id="cookie-decline">Refuser</button>
+        </div>
+    </div>
+    <button id="scrollTopBtn" title="Go to top">
+        <img src="https://img.icons8.com/ios-filled/50/000000/up.png" alt="Scroll to top">
+    </button>
+    <script type="module">
+        import { supabase } from './js/supabase-config.js';
+
+        function showResult(message, isSuccess = true) {
+            const div = document.createElement('div');
+            div.className = `result ${isSuccess ? 'success' : 'error'}`;
+            div.textContent = message;
+            document.getElementById('results').appendChild(div);
+        }
+
+        window.testConnection = async function() {
+            document.getElementById('results').innerHTML = '';
+            try {
+                const { data, error } = await supabase.auth.getSession();
+                showResult('✅ Connexion Supabase OK');
+            } catch (error) {
+                showResult('❌ Erreur connexion: ' + error.message, false);
+            }
+        }
+
+        window.testTables = async function() {
+            document.getElementById('results').innerHTML = '';
+            try {
+                const { data, error } = await supabase.from('users').select('count', { count: 'exact', head: true });
+                if (error && error.code === 'PGRST116') {
+                    showResult('❌ Tables non créées ! Exécutez supabase-schema.sql', false);
+                } else if (error) {
+                    showResult('❌ Erreur: ' + error.message, false);
+                } else {
+                    showResult('✅ Tables créées et accessibles');
+                }
+            } catch (error) {
+                showResult('❌ Erreur: ' + error.message, false);
+            }
+        }
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

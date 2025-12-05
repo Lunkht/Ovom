@@ -1,0 +1,30 @@
+{
+  "name": "ovom",
+  "version": "1.0.0",
+  "description": "Plateforme de santé connectée pour l'Afrique",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "npx http-server -p 8000 -o",
+    "deploy": "firebase deploy",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:firestore": "firebase deploy --only firestore",
+    "test": "echo \"Ouvrez test-firebase.html dans votre navigateur\" && exit 0"
+  },
+  "keywords": [
+    "health",
+    "firebase",
+    "telemedicine",
+    "africa",
+    "healthcare"
+  ],
+  "author": "Ovom Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/votre-username/ovom.git"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  }
+}

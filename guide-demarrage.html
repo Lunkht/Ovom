@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide de Démarrage - Ovom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2a9d8f 0%, #264653 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #2a9d8f;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .step {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            font-weight: bold;
+            color: rgba(42, 157, 143, 0.1);
+        }
+        
+        .step h2 {
+            color: #2a9d8f;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .step-icon {
+            font-size: 2rem;
+        }
+        
+        .step-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .code-block code {
+            color: #ce9178;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #856404;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #2a9d8f;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: #238276;
+        }
+        
+        .btn-secondary {
+            background: #264653;
+        }
+        
+        .btn-secondary:hover {
+            background: #1a3a47;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .checklist li::before {
+            content: "☐";
+            font-size: 1.5rem;
+            color: #2a9d8f;
+        }
+        
+        .firebase-info {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .firebase-info h3 {
+            color: #d63031;
+            margin-bottom: 1rem;
+        }
+        
+        .firebase-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .firebase-info td {
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .firebase-info td:first-child {
+            font-weight: bold;
+            color: #d63031;
+        }
+        
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <main class="guide-page">
+        <div class="container">
+            <h1 class="guide-title">🚀 Guide de Démarrage Rapide</h1>
+            <p class="guide-subtitle">Configurez votre application Ovom en quelques étapes simples.</p>
+
+            <section class="guide-section">
+                <div class="guide-card">
+                    <div class="guide-step-number">1</div>
+                    <div class="guide-content">
+                        <h2><span class="step-icon">🔑</span> Récupérer vos Clés Firebase</h2>
+                        <p>Temps estimé: <strong>2 minutes</strong></p>
+                        <ol>
+                            <li>Allez sur <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a></li>
+                            <li>Sélectionnez le projet <span class="highlight">Ovom</span></li>
+                            <li>Cliquez sur l'icône ⚙️ en haut à gauche</li>
+                            <li>Cliquez sur <span class="highlight">Paramètres du projet</span></li>
+                            <li>Faites défiler jusqu'à <span class="highlight">Vos applications</span></li>
+                            <li>Copiez les valeurs de <code>apiKey</code> et <code>appId</code></li>
+                        </ol>
+                        <div class="info-box">
+                            <strong>💡 Astuce:</strong> Si vous ne voyez pas d'application web, cliquez sur l'icône &lt;/&gt; pour en créer une.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="guide-section">
+                <div class="guide-card">
+                    <div class="guide-step-number">2</div>
+                    <div class="guide-content">
+                        <h2><span class="step-icon">✏️</span> Mettre à Jour le Code</h2>
+                        <p>Temps estimé: <strong>1 minute</strong></p>
+                        <ol>
+                            <li>Ouvrez le fichier <span class="highlight">js/firebase-config.js</span></li>
+                            <li>Trouvez ces deux lignes:</li>
+                        </ol>
+                        <pre class="code-block"><code>apiKey: "VOTRE_API_KEY",
+appId: "VOTRE_APP_ID"</code></pre>
+                        <ol start="3">
+                            <li>Remplacez <code>VOTRE_API_KEY</code> par votre vraie clé</li>
+                            <li>Remplacez <code>VOTRE_APP_ID</code> par votre vrai ID</li>
+                            <li>Sauvegardez le fichier</li>
+                        </ol>
+                        <div class="warning-box">
+                            <strong>⚠️ Important:</strong> Copiez les clés complètes, sans espaces avant ou après.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="guide-section">
+                <div class="guide-card">
+                    <div class="guide-step-number">3</div>
+                    <div class="guide-content">
+                        <h2><span class="step-icon">🎮</span> Lancer l'Application</h2>
+                        <p>Temps estimé: <strong>1 minute</strong></p>
+                        <ol>
+                            <li>Ouvrez un terminal dans le dossier du projet</li>
+                            <li>Copiez-collez UNE de ces commandes:</li>
+                        </ol>
+                        <pre class="code-block"><code># Si vous avez Python (recommandé)
+python -m http.server 8000
+
+# Si vous avez Node.js
+npx http-server
+
+# Si vous avez PHP
+php -S localhost:8000</code></pre>
+                        <ol start="3">
+                            <li>Ouvrez votre navigateur</li>
+                            <li>Allez sur <span class="highlight">http://localhost:8000</span></li>
+                        </ol>
+                        <div class="success-box">
+                            <strong>✅ Félicitations!</strong> Votre application est maintenant en ligne localement!
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="guide-section">
+                <div class="guide-card">
+                    <div class="guide-step-number">✓</div>
+                    <div class="guide-content">
+                        <h2><span class="step-icon">🧪</span> Tester l'Application</h2>
+                        <h3>Checklist de Test</h3>
+                        <ul class="checklist">
+                            <li>Ouvrir test-firebase.html et cliquer sur les 3 boutons de test</li>
+                            <li>Créer un compte sur signup.html</li>
+                            <li>Vérifier la redirection vers dashboard.html</li>
+                            <li>Se déconnecter</li>
+                            <li>Se reconnecter via login.html</li>
+                            <li>Envoyer un message via contact.html</li>
+                            <li>Vérifier dans Firebase Console que tout est enregistré</li>
+                        </ul>
+                        <div class="info-box">
+                            <strong>💡 Conseil:</strong> Ouvrez la console du navigateur (F12) pour voir les logs et détecter d'éventuelles erreurs.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="guide-section">
+                <h2 class="section-title">📚 Documentation & Ressources</h2>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h3>Documentation</h3>
+                        <ul>
+                            <li><strong>START_HERE.md</strong> - Guide en 3 étapes (le plus simple)</li>
+                            <li><strong>LISEZMOI.md</strong> - Documentation en français simple</li>
+                            <li><strong>FIREBASE_SETUP.md</strong> - Configuration Firebase détaillée</li>
+                            <li><strong>CHECKLIST.md</strong> - Liste de vérification complète</li>
+                            <li><strong>EXAMPLES.md</strong> - Exemples pour ajouter des fonctionnalités</li>
+                            <li><strong>WORKFLOW.md</strong> - Comprendre le flux de l'application</li>
+                        </ul>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Problèmes Courants</h3>
+                        <ul>
+                            <li><strong>"Erreur: invalid-api-key"</strong> → Vérifiez js/firebase-config.js</li>
+                            <li><strong>"Erreur CORS"</strong> → Utilisez un serveur local (Étape 3)</li>
+                            <li><strong>Page blanche</strong> → Appuyez sur F12 et regardez la console</li>
+                            <li><strong>"Authentication not enabled"</strong> → Activez-la dans Firebase Console</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="guide-section">
+                <h2 class="section-title">Liens Rapides</h2>
+                <div class="quick-links-guide">
+                    <a href="test-firebase.html" class="btn btn-secondary">🧪 Tester Firebase</a>
+                    <a href="index.html" class="btn btn-primary">🏠 Voir l'Application</a>
+                    <a href="project-overview.html" class="btn btn-secondary">📊 Vue d'Ensemble</a>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>Ovom</h3>
+                <p>Notre mission est de rendre l'accès aux soins de santé plus simple, plus rapide et plus efficace pour tous.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Liens Rapides</h4>
+                <ul>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">À propos</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="project-overview.html">Vue d'ensemble du projet</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><img src="https://img.icons8.com/ios-filled/50/000000/facebook.png" alt="Facebook"></a>
+                    <a href="#" aria-label="Twitter"><img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter"></a>
+                    <a href="#" aria-label="LinkedIn"><img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ovom. Tous droits réservés.</p>
+        </div>
+    </footer>
+    <div id="cookie-banner">
+        <p>
+            Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre <a href="#">Politique de cookies</a>.
+        </p>
+        <div>
+            <button id="cookie-accept">Accepter</button>
+            <button id="cookie-decline">Refuser</button>
+        </div>
+    </div>
+    <button id="scrollTopBtn" title="Go to top">
+        <img src="https://img.icons8.com/ios-filled/50/000000/up.png" alt="Scroll to top">
+    </button>
+    <script src="js/main.js"></script>
+</body>
+</html>

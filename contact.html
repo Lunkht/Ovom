@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Ovom</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Ovom</a>
+            <form class="search-bar">
+                <input type="text" placeholder="Rechercher...">
+                <button type="submit">
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/search--v1.png" alt="Rechercher">
+                </button>
+            </form>
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="btn btn-secondary">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-contact">
+            <div class="container">
+                <h1>Entrez en Contact</h1>
+                <p>Nous sommes là pour vous aider. Remplissez le formulaire ci-dessous ou trouvez nos coordonnées pour nous joindre directement.</p>
+            </div>
+        </section>
+
+        <section class="contact-form-section">
+            <div class="container">
+                <div class="contact-wrapper">
+                    <div class="contact-form">
+                        <h2>Envoyez-nous un Message</h2>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Nom</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <div id="success-message" style="color: green; margin: 10px 0; display: none;">Message envoyé avec succès !</div>
+                            <div id="error-message" style="color: red; margin: 10px 0; display: none;"></div>
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                        </form>
+                    </div>
+                    <div class="contact-info">
+                        <h2>Nos Coordonnées</h2>
+                        <p><strong>Adresse :</strong> 123 Rue de l'Innovation, Dakar, 10200, Sénégal</p>
+                        <p><strong>Email :</strong> <a href="mailto:contact@ovom.com">contact@ovom.com</a></p>
+                        <p><strong>Téléphone :</strong> +221 33 800 00 00</p>
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>Ovom</h3>
+                <p>Notre mission est de rendre l'accès aux soins de santé plus simple, plus rapide et plus efficace pour tous.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Liens Rapides</h4>
+                <ul>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">À propos</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="project-overview.html">Vue d'ensemble du projet</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><img src="https://img.icons8.com/ios-filled/50/000000/facebook.png" alt="Facebook"></a>
+                    <a href="#" aria-label="Twitter"><img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter"></a>
+                    <a href="#" aria-label="LinkedIn"><img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ovom. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <div id="cookie-banner">
+        <p>
+            Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre <a href="#">Politique de cookies</a>.
+        </p>
+        <div>
+            <button id="cookie-accept">Accepter</button>
+            <button id="cookie-decline">Refuser</button>
+        </div>
+    </div>
+    <button id="scrollTopBtn" title="Go to top">
+        <img src="https://img.icons8.com/ios-filled/50/000000/up.png" alt="Scroll to top">
+    </button>
+    <script src="js/main.js"></script>
+    <script type="module">
+        import { supabase } from './js/supabase-config.js';
+
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            
+            try {
+                const { error } = await supabase
+                    .from('contacts')
+                    .insert([
+                        {
+                            name: name,
+                            email: email,
+                            message: message,
+                            created_at: new Date().toISOString()
+                        }
+                    ]);
+                
+                if (error) throw error;
+                
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                document.getElementById('contactForm').reset();
+                
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            } catch (error) {
+                errorMessage.textContent = 'Erreur: ' + error.message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
