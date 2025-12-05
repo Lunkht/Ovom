@@ -784,17 +784,20 @@ body:not(.home-page) header {
 @media (max-width: 768px) {
     header {
         top: 0;
+        will-change: transform;
     }
 
     header .container {
         width: 100%;
         border-radius: 0;
         max-width: 100%;
-        padding: 1rem;
+        padding: 0.8rem 1rem;
+        background: rgba(0, 0, 0, 0.9);
     }
 
     .logo {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+        white-space: nowrap;
     }
 
     .search-bar {
@@ -803,22 +806,25 @@ body:not(.home-page) header {
 
     .mobile-menu-toggle {
         display: flex;
+        z-index: 1001;
+        position: relative;
     }
 
     .nav-links {
         position: fixed;
         left: -100%;
-        top: 60px;
+        top: 56px;
         flex-direction: column;
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 100%);
+        background: #000;
         width: 100%;
-        text-align: center;
-        transition: left 0.3s ease;
-        padding: 2rem 0;
+        height: 100vh;
+        text-align: left;
+        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 1.5rem 0 0 0;
         gap: 0;
-        z-index: 999;
-        max-height: calc(100vh - 60px);
+        z-index: 1000;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .nav-links.active {
@@ -827,39 +833,65 @@ body:not(.home-page) header {
 
     .nav-links li {
         margin: 0;
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-links li:first-child {
+        padding-top: 1rem;
     }
 
     .nav-links li:last-child {
         border-bottom: none;
+        padding-bottom: 2rem;
     }
 
     .nav-links a {
         display: block;
-        padding: 1rem;
-        font-size: 1.1rem;
+        padding: 1.2rem 1.5rem;
+        font-size: 1rem;
+        color: #fff;
+        transition: all 0.2s ease;
+    }
+
+    .nav-links a:active {
+        background: rgba(42, 157, 143, 0.2);
     }
 
     .nav-links .btn {
-        margin: 1rem auto;
-        display: inline-block;
-        width: 90%;
-        padding: 1rem;
+        margin: 1.5rem 1.5rem 0;
+        display: block;
+        width: calc(100% - 3rem);
+        padding: 1rem 1.5rem;
+        text-align: center;
+        font-size: 1rem;
     }
 
     .nav-links .btn-secondary {
-        background: rgba(42, 157, 143, 0.9);
-        width: 90%;
-        margin: 1rem auto;
+        background: linear-gradient(135deg, #2a9d8f 0%, #1f7a6a 100%);
+        width: calc(100% - 3rem);
+        margin: 1.5rem 1.5rem 0;
+        padding: 1rem 1.5rem;
+    }
+
+    .nav-links .btn-secondary:active {
+        transform: scale(0.98);
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    body.nav-open {
+        overflow: hidden;
     }
 
     body:not(.home-page) {
-        padding-top: 60px;
+        padding-top: 56px;
     }
 
     #hero {
-        margin-top: 60px;
+        margin-top: 56px;
     }
 
     #hero .hero-container {
