@@ -785,6 +785,7 @@ body:not(.home-page) header {
     header {
         top: 0;
         will-change: transform;
+        width: 100%;
     }
 
     header .container {
