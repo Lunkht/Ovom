@@ -747,6 +747,7 @@ body:not(.home-page) header {
         flex-direction: column;
         height: auto;
         padding: 2rem 1rem;
+        border-radius: 20px;
     }
 
     #hero h1 {
