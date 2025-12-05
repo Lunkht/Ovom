@@ -1015,6 +1015,28 @@ body:not(.home-page) header {
     .form-row {
         grid-template-columns: 1fr;
     }
+
+    /* Responsive Styles for Auth Pages */
+    .auth-wrapper {
+        grid-template-columns: 1fr; /* Stack columns on small screens */
+        max-width: 90%; /* Adjust max-width for better fit */
+    }
+
+    .auth-image-container {
+        display: none; /* Hide image on small screens */
+    }
+
+    .auth-form-container {
+        padding: 30px; /* Adjust padding for smaller screens */
+    }
+
+    .auth-form-container h1 {
+        font-size: 2rem; /* Smaller heading */
+    }
+
+    .auth-form-container p {
+        font-size: 0.9rem; /* Smaller paragraph text */
+    }
 }/* Styles for the new footer */
 
 .footer {
