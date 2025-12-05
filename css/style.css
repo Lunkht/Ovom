@@ -812,22 +812,26 @@ body:not(.home-page) header {
 
 /* Responsive */
 @media (max-width: 768px) {
+    bod{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
     header {
         top: 0;
         will-change: transform;
-        width: 100%;
     }
 
     header .container {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-radius: 35px;
+        border-radius: 0px;
         max-width: 100%;
         padding: 0 1rem;
         height: 56px;
         box-sizing: border-box;
-        background: rgba(105, 104, 104, 0.663);
+        background: #2a9d8f;
     }
 
     .logo {
