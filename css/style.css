@@ -1440,6 +1440,9 @@ body:not(.home-page) header {
     .contact-info h2 {
         font-size: 1.5rem;
     }
+    .container {
+    max-width: 100%;
+}
 }
 
 
