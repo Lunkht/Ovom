@@ -1029,6 +1029,7 @@ body:not(.home-page) header {
     .auth-form-container {
         padding: 30px; /* Adjust padding for smaller screens */
     }
+    
 
     .auth-form-container h1 {
         font-size: 2rem; /* Smaller heading */
