@@ -817,6 +817,28 @@ body:not(.home-page) header {
         padding: 0;
         width: 100%;
     }
+    /* Ensure all hero sections are full-width on small screens across all pages */
+    [class*="hero"],
+    #hero,
+    .page-hero {
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    /* Expand internal hero containers to line up edge-to-edge with the viewport */
+    [class*="hero"] .container,
+    [class*="hero"] .hero-container,
+    #hero .hero-container,
+    .page-hero .container {
+        width: calc(100% + 2rem);
+        margin-left: -1rem;
+        margin-right: -1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-radius: 0;
+    }
     header {
         top: 0;
         will-change: transform;
