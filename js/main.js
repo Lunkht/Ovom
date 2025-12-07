@@ -82,6 +82,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
+        // Newsletter signup handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const newsletterForm = document.getElementById('newsletterForm');
+            if (!newsletterForm) return;
+
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('newsletterEmail');
+                const email = input && input.value.trim();
+                const errorColor = '#c0392b';
+
+                function isValidEmail(email) {
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                }
+
+                if (!email || !isValidEmail(email)) {
+                    // simple inline feedback
+                    input.style.borderColor = errorColor;
+                    input.focus();
+                    return;
+                }
+
+                // Store locally (as demo). In real app send to server or supabase table.
+                try {
+                    const stored = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+                    if (!stored.includes(email)) stored.push(email);
+                    localStorage.setItem('newsletterSubscribers', JSON.stringify(stored));
+                } catch (err) {
+                    try { localStorage.setItem('newsletterSubscribers', JSON.stringify([email])); } catch (e) {}
+                }
+
+                // Replace form with a thank you message
+                const parent = newsletterForm.parentElement;
+                if (parent) {
+                    const msg = document.createElement('p');
+                    msg.textContent = 'Merci ! Votre adresse a été enregistrée.';
+                    msg.style.color = '#2a9d8f';
+                    msg.style.marginTop = '8px';
+                    newsletterForm.replaceWith(msg);
+                }
+            });
+        });
+
     // Smooth scrolling for navigation links
     const allNavLinks = document.querySelectorAll('header .nav-links a[href^="#"]');
 
