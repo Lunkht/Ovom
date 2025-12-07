@@ -836,7 +836,51 @@ body:not(.home-page) header {
     .page-hero .container {
         max-width: 1100px;
         width: 100%;
-        margin: 0 auto;
+        /* Timeline adaptation for mobile */
+        .timeline {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+        }
+        .timeline-item {
+            width: 100%;
+            left: 0 !important;
+            padding: 10px 0;
+            margin-bottom: 1.5rem;
+        }
+        .timeline-content {
+            padding: 16px 12px;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .timeline-date {
+            display: block;
+            font-weight: bold;
+            color: #2a9d8f;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        .timeline-desc {
+            font-size: 1rem;
+            color: #333;
+        }
+        .timeline::after {
+            left: 18px;
+            width: 3px;
+            margin-left: 0;
+        }
+        .timeline-item::after {
+            left: 0;
+            right: auto;
+            top: 18px;
+            width: 18px;
+            height: 18px;
+            border-width: 3px;
+        }
         padding-left: 0; /* remove horizontal gutter inside hero */
         padding-right: 0; /* remove horizontal gutter inside hero */
         box-sizing: border-box;
@@ -1016,10 +1060,23 @@ body:not(.home-page) header {
         padding: 0 1rem;
     }
 
+    .about-section {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
     .about-card {
         flex-direction: column;
-        padding: 2.5rem 2rem;
+        padding: 2rem 0;
         text-align: center;
+        border-radius: 0;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .about-title {
@@ -1070,6 +1127,202 @@ body:not(.home-page) header {
 
     .auth-form-container p {
         font-size: 0.9rem; /* Smaller paragraph text */
+    }
+
+    /* Responsive Styles for About Page */
+    .hero-about .container {
+        padding: 60px 20px; /* Adjust padding for smaller screens */
+    }
+
+    .hero-about h1 {
+        font-size: 2.2rem; /* Smaller heading */
+    }
+
+    .hero-about p {
+        font-size: 1rem; /* Smaller paragraph text */
+    }
+
+    .timeline::after {
+        left: 31px; /* Move timeline line to the left */
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px; /* Adjust padding for single column */
+        padding-right: 25px;
+    }
+
+    .timeline-item::before {
+        left: 60px; /* Adjust position of the dot */
+        border-color: white;
+    }
+
+    .timeline-item:nth-child(even) {
+        left: 0%; /* Align even items to the left */
+    }
+
+    .timeline-item:nth-child(even)::after {
+        left: 24px; /* Adjust position of the dot for even items */
+    }
+
+    .timeline-content {
+        text-align: left; /* Align text to left */
+    }
+
+    .team-grid-modern {
+        grid-template-columns: 1fr; /* Single column for team members */
+    }
+
+    .team-member-modern {
+        text-align: center; /* Center team member content */
+    }
+
+    /* Responsive Styles for Dashboard Page */
+    .dashboard-page {
+        flex-direction: column; /* Stack sidebar and content */
+    }
+
+    .dashboard-sidebar {
+        width: 100%; /* Full width for sidebar */
+        height: auto; /* Adjust height automatically */
+        padding: 15px 20px; /* Adjust padding */
+        display: none; /* Hide by default on small screens */
+        position: absolute; /* Position absolutely to not affect content flow */
+        top: 56px; /* Position below header */
+        left: 0;
+        z-index: 999; /* Ensure it's above other content */
+        background-color: var(--secondary-color); /* Ensure background color */
+    }
+
+    .dashboard-sidebar.active {
+        display: block; /* Show when active */
+    }
+
+    .dashboard-content {
+        padding: 20px; /* Adjust padding for content */
+        width: 100%; /* Full width for content */
+    }
+
+    .dashboard-grid-modern {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust minmax for smaller cards */
+    }
+
+    .content-header h1 {
+        font-size: 1.8rem; /* Smaller heading */
+    }
+
+    .content-header p {
+        font-size: 0.9rem; /* Smaller paragraph text */
+    }
+
+    /* Responsive Styles for Guide Demarrage Page */
+    .guide-page .container {
+        padding: 20px; /* Adjust padding for smaller screens */
+        max-width: 95%; /* Adjust max-width for better fit */
+    }
+
+    .guide-title {
+        font-size: 2rem; /* Smaller heading */
+    }
+
+    .guide-subtitle {
+        font-size: 0.9rem; /* Smaller paragraph text */
+        margin-bottom: 2rem;
+    }
+
+    .guide-card {
+        flex-direction: column; /* Stack content vertically */
+        padding: 20px;
+    }
+
+    .guide-step-number {
+        font-size: 2rem; /* Smaller step number */
+        margin-right: 0;
+        margin-bottom: 1rem; /* Add margin below number */
+    }
+
+    .resource-grid {
+        grid-template-columns: 1fr; /* Single column for resources */
+    }
+
+    .quick-links-guide {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 0.5rem;
+    }
+
+    .quick-links-guide .btn {
+        width: 100%; /* Full width buttons */
+    }
+
+    /* Responsive Styles for Project Overview Page */
+    .project-overview-page .container {
+        padding: 20px; /* Adjust padding for smaller screens */
+        max-width: 95%; /* Adjust max-width for better fit */
+    }
+
+    .overview-title {
+        font-size: 2rem; /* Smaller heading */
+    }
+
+    .overview-subtitle {
+        font-size: 0.9rem; /* Smaller paragraph text */
+        margin-bottom: 2rem;
+    }
+
+    .tech-grid,
+    .features-list,
+    .project-structure {
+        grid-template-columns: 1fr; /* Single column for grids */
+    }
+
+    .quick-links {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 0.5rem;
+    }
+
+    .quick-links .btn {
+        width: 100%; /* Full width buttons */
+    }
+
+    /* Responsive Styles for Services Page */
+    .hero-services .container {
+        padding: 60px 20px; /* Adjust padding for smaller screens */
+    }
+
+    .hero-services h1 {
+        font-size: 2.2rem; /* Smaller heading */
+    }
+
+    .hero-services p {
+        font-size: 1rem; /* Smaller paragraph text */
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr; /* Single column for service cards */
+    }
+
+    /* Responsive Styles for Test Pages */
+    .test-page .container {
+        padding: 20px; /* Adjust padding for smaller screens */
+        max-width: 95%; /* Adjust max-width for better fit */
+    }
+
+    .test-title {
+        font-size: 2rem; /* Smaller heading */
+    }
+
+    .test-subtitle {
+        font-size: 0.9rem; /* Smaller paragraph text */
+        margin-bottom: 2rem;
+    }
+
+    .test-actions {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 0.5rem;
+    }
+
+    .test-actions .btn {
+        width: 100%; /* Full width buttons */
     }
 }/* Styles for the new footer */
 
@@ -1359,6 +1612,7 @@ body:not(.home-page) header {
     padding: 100px 0;
      border-radius: 30px;
     margin: 16px;
+    height: 70vh;
 }
 
 .hero-contact h1 {

@@ -12,6 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Dashboard sidebar toggle
+    const dashboardSidebarToggle = document.querySelector('.dashboard-sidebar-toggle');
+    const dashboardSidebar = document.querySelector('.dashboard-sidebar');
+
+    if (dashboardSidebarToggle && dashboardSidebar) {
+        dashboardSidebarToggle.addEventListener('click', () => {
+            dashboardSidebar.classList.toggle('active');
+            dashboardSidebarToggle.classList.toggle('active');
+        });
+    }
+
     // Close mobile menu when clicking on a link
     navLinksItems.forEach(link => {
         link.addEventListener('click', () => {
@@ -44,6 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 navLinks.classList.remove('active');
                 mobileMenuToggle.classList.remove('active');
                 document.body.classList.remove('nav-open');
+            }
+        }
+
+        // Close dashboard sidebar when clicking outside
+        if (dashboardSidebar && dashboardSidebarToggle) {
+            const isClickInsideSidebar = dashboardSidebar.contains(e.target);
+            const isClickOnSidebarToggle = dashboardSidebarToggle.contains(e.target);
+
+            if (!isClickInsideSidebar && !isClickOnSidebarToggle && dashboardSidebar.classList.contains('active')) {
+                dashboardSidebar.classList.remove('active');
+                dashboardSidebarToggle.classList.remove('active');
             }
         }
     });
