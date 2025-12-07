@@ -25,12 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close mobile menu when clicking on a link
     navLinksItems.forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
+            // Close the menu UI immediately
             navLinks.classList.remove('active');
             if (mobileMenuToggle) {
                 mobileMenuToggle.classList.remove('active');
             }
             document.body.classList.remove('nav-open');
+
+            // For non-hash links, ensure navigation happens reliably even if UI changes
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith('#')) {
+                // Prevent default navigation and perform a controlled redirect
+                e.preventDefault();
+                // Small timeout lets closing animation run before navigating
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 50);
+            }
         });
     });
 
