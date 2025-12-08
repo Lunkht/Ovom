@@ -38,12 +38,21 @@
         object-fit: contain;
         margin: 0;
     }
-
+  .app-text{
+        padding: 20px;
+        display: flex;
+        align-items: center;
+    }
     .app-text h3 {
         font-size: 16px;
     }
 
     .app-text p {
+        font-size: 20px;
+        width: 100%;
+    }
+
+      .app-text a {
         font-size: 20px;
         width: 100%;
     }
@@ -356,11 +365,6 @@ header .container {
     transition: all 0.3s ease;
 }
 
-.btn-primary {
-    background-color: var(--white-text);
-    color: var(--primary-color);
-}
-
 .btn-secondary {
     color: black;
     text-decoration: none;
@@ -575,6 +579,18 @@ footer {
     color: var(--white-text);
     text-align: center;
     padding: 2rem 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Animations */
@@ -1476,18 +1492,37 @@ body:not(.home-page) header {
 }
 
 .app-screen {
-    background-color: rgb(205, 232, 205);
+    background-color: rgb(230, 243, 230);
     padding: 40px;
 }
 
 .app-text {
     padding: 30px;
+    opacity: 0; /* Initial state for animation */
+    animation: fadeInLeft 1s ease-out forwards; /* Apply animation */
+    animation-delay: 0.2s; /* Add a slight delay */
+}
+
+
+.download_btn-primary {
+    background-color: var(--white-text);
+    color: var(--primary-color);
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: "Saira", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 300;
 }
 
 .app-text h3 {
     text-align: start;
     font-size: 18px;
-    color: #adb9f0;
+    color: #1a1918;
     margin-bottom: 10px;
     font-weight: 600;
     font-family: "Saira", sans-serif;
@@ -1531,7 +1566,9 @@ body:not(.home-page) header {
     margin: 0 auto;
     align-items: center;
     justify-content: space-between;
-
+    opacity: 0; /* Initial state for animation */
+    animation: fadeInUp 1s ease-out forwards; /* Apply animation */
+    animation-delay: 0.5s; /* Add a slight delay */
 }
 
 /* Styles for the new footer */
