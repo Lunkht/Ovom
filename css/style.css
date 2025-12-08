@@ -12,6 +12,55 @@
     --white-move: #eeeded;
 }
 
+/* Small screen adaptations for footer-title and app-screen */
+@media (max-width: 768px) {
+    #footer-title {
+        font-size: 48px !important;
+        line-height: 1;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .app-screen {
+        padding: 16px;
+    }
+
+    .app-screen .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .app-screen img {
+        width: 100%;
+        height: auto;
+        max-height: 360px;
+        object-fit: contain;
+        margin: 0;
+    }
+
+    .app-text h3 {
+        font-size: 16px;
+    }
+
+    .app-text p {
+        font-size: 20px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    #footer-title {
+        font-size: 30px !important;
+    }
+    .app-screen img {
+        max-height: 260px;
+    }
+    .app-text p {
+        font-size: 18px;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -850,6 +899,11 @@ body:not(.home-page) header {
         box-sizing: border-box;
     }
 
+    .page-hero {
+        height: 100vh;
+        padding-top: 56px;
+    }
+
     /* Keep inner containers constrained and add consistent horizontal padding */
     [class*="hero"] .container,
     [class*="hero"] .hero-container,
@@ -1045,10 +1099,6 @@ body:not(.home-page) header {
 
     body.nav-open {
         overflow: hidden;
-    }
-
-    body:not(.home-page) {
-        padding-top: 56px;
     }
 
     #hero {
