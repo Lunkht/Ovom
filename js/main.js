@@ -23,6 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Auto-center auth pages when image column is removed or hidden
+    const authWrapper = document.querySelector('.auth-wrapper');
+    if (authWrapper) {
+        const authImage = authWrapper.querySelector('.auth-image-container');
+        const imageMissing = !authImage || authImage.children.length === 0;
+        const imageHidden = authImage && getComputedStyle(authImage).display === 'none';
+        if (imageMissing || imageHidden) {
+            authWrapper.classList.add('centered');
+        }
+    }
+
     // Close mobile menu when clicking on a link
     navLinksItems.forEach(link => {
         link.addEventListener('click', (e) => {
