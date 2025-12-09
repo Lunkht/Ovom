@@ -1022,16 +1022,15 @@ body:not(.home-page) header {
     text-decoration: none;
 }
 
-/* Responsive */
+/* Responsive styles (mobile) */
 @media (max-width: 768px) {
-    bod {
+    body {
         margin: 0;
         padding: 0;
         width: 100%;
     }
 
-    /* Ensure all hero sections are full-width on small screens without shifting the page.
-       Remove external margins while keeping the inner container centered with safe padding. */
+    /* Make hero sections full width and remove extra gutters */
     [class*="hero"],
     #hero,
     .page-hero {
@@ -1054,65 +1053,62 @@ body:not(.home-page) header {
     .page-hero .container {
         max-width: 1100px;
         width: 100%;
-
-        /* Timeline adaptation for mobile */
-        .timeline {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 0 0.5rem;
-        }
-
-        .timeline-item {
-            width: 100%;
-            left: 0 !important;
-            padding: 10px 0;
-            margin-bottom: 1.5rem;
-        }
-
-        .timeline-content {
-            padding: 16px 12px;
-            border-radius: 8px;
-            text-align: left;
-        }
-
-        .timeline-date {
-            display: block;
-            font-weight: bold;
-            color: #2a9d8f;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-        }
-
-        .timeline-title {
-            font-size: 1.2rem;
-            margin-bottom: 4px;
-        }
-
-        .timeline-desc {
-            font-size: 1rem;
-            color: #333;
-        }
-
-        .timeline::after {
-            left: 18px;
-            width: 3px;
-            margin-left: 0;
-        }
-
-        .timeline-item::after {
-            left: 0;
-            right: auto;
-            top: 18px;
-            width: 18px;
-            height: 18px;
-            border-width: 3px;
-        }
-
-        padding-left: 0;
-        /* remove horizontal gutter inside hero */
-        padding-right: 0;
-        /* remove horizontal gutter inside hero */
+        margin: 0 auto;
+        padding: 0 0.5rem;
         box-sizing: border-box;
+    }
+
+    /* Timeline adaptation for mobile */
+    .timeline {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 0.5rem;
+    }
+
+    .timeline-item {
+        width: 100%;
+        left: 0 !important;
+        padding: 10px 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .timeline-content {
+        padding: 16px 12px;
+        border-radius: 8px;
+        text-align: left;
+    }
+
+    .timeline-date {
+        display: block;
+        font-weight: bold;
+        color: var(--primary-color);
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+    }
+
+    .timeline-title {
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+    }
+
+    .timeline-desc {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .timeline::after {
+        left: 18px;
+        width: 3px;
+        margin-left: 0;
+    }
+
+    .timeline-item::after {
+        left: 0;
+        right: auto;
+        top: 18px;
+        width: 18px;
+        height: 18px;
+        border-width: 3px;
     }
 
     /* Ensure specific hero sections don't keep extra margin */
@@ -1124,11 +1120,11 @@ body:not(.home-page) header {
         margin-right: 0;
     }
 
+    /* Header adjustments for small screens */
     header {
         top: 0;
         will-change: transform;
-                width: 100%;
-
+        width: 100%;
     }
 
     header .container {
@@ -1140,7 +1136,7 @@ body:not(.home-page) header {
         padding: 0 1rem;
         height: 56px;
         box-sizing: border-box;
-        background: #2a9d8f;
+        background: var(--primary-color);
     }
 
     .logo {
@@ -1158,14 +1154,13 @@ body:not(.home-page) header {
         position: relative;
     }
 
+    /* Mobile nav drawer */
     .nav-links {
         position: fixed;
         left: 0;
-        /* keep at 0 and hide with transform/visibility to avoid painting a solid bg when hidden */
         top: 56px;
         flex-direction: column;
         background: transparent;
-        /* no bg when closed */
         width: 100%;
         height: auto;
         max-height: calc(100vh - 56px);
@@ -1178,64 +1173,15 @@ body:not(.home-page) header {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         pointer-events: none;
-        /* ignore clicks when closed */
         visibility: hidden;
     }
 
     .nav-links.active {
         transform: translateX(0);
         background: rgb(245, 242, 242);
-        /* show dark bg only when open */
         height: calc(100vh - 56px);
         visibility: visible;
         pointer-events: auto;
-    }
-
-    .nav-links li {
-        margin: 0;
-        padding: 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .nav-links li:first-child {
-        padding-top: 1rem;
-    }
-
-    .nav-links li:last-child {
-        border-bottom: none;
-        padding-bottom: 2rem;
-    }
-
-    .nav-links a {
-        display: block;
-        padding: 1.2rem 1.5rem;
-        font-size: 1rem;
-        color: #03867b;
-        transition: all 0.2s ease;
-    }
-
-    .nav-links a:active {
-        background: rgba(42, 157, 143, 0.2);
-    }
-
-    .nav-links .btn {
-        margin: 1.5rem 1.5rem 0;
-        display: block;
-        width: calc(100% - 3rem);
-        padding: 1rem 1.5rem;
-        text-align: center;
-        font-size: 1rem;
-    }
-
-    .nav-links .btn-secondary {
-        background: linear-gradient(135deg, #2a9d8f 0%, #1f7a6a 100%);
-        width: calc(100% - 3rem);
-        margin: 1.5rem 1.5rem 0;
-        padding: 1rem 1.5rem;
-    }
-
-    .nav-links .btn-secondary:active {
-        transform: scale(0.98);
     }
 
     body {
@@ -1357,7 +1303,7 @@ body:not(.home-page) header {
         /* Adjust padding for smaller screens */
     }
 
-
+}
     .auth-form-container h1 {
         font-size: 2rem;
         /* Smaller heading */
