@@ -1,5 +1,8 @@
 -- Migration: create establishments table and is_admin flag for users
--- Run this SQL in your Supabase SQL editor
+-- NOTE: This SQL was originally written for Supabase (Postgres). The project
+-- has been migrated to Firebase (Firestore). This SQL file is kept for
+-- historical/reference purposes only and is not required for the Firebase setup.
+-- Run this SQL in your Supabase SQL editor if you still need a Postgres schema.
 
 -- extension for uuid gen (may already exist)
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";

@@ -70,7 +70,8 @@
         <img src="https://img.icons8.com/ios-filled/50/000000/up.png" alt="Scroll to top">
     </button>
     <script type="module">
-        import { supabase } from './js/supabase-config.js';
+        import { testConnection, db } from './js/firebase-config.js';
+        import { collection, getDocs, query, limit } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
 
         function showResult(message, isSuccess = true) {
             const div = document.createElement('div');
@@ -82,26 +83,26 @@
         window.testConnection = async function() {
             document.getElementById('results').innerHTML = '';
             try {
-                const { data, error } = await supabase.auth.getSession();
-                showResult('✅ Connexion Supabase OK');
+                const res = await testConnection();
+                if (res.ok) {
+                    showResult('✅ Firebase initialisé (test de connectivité OK)');
+                } else {
+                    showResult('⚠️ Test connexion retourné: ' + (res.error || 'erreur inconnue'), false);
+                }
             } catch (error) {
-                showResult('❌ Erreur connexion: ' + error.message, false);
+                showResult('❌ Erreur connexion: ' + (error.message || error), false);
             }
         }
 
         window.testTables = async function() {
             document.getElementById('results').innerHTML = '';
             try {
-                const { data, error } = await supabase.from('users').select('count', { count: 'exact', head: true });
-                if (error && error.code === 'PGRST116') {
-                    showResult('❌ Tables non créées ! Exécutez supabase-schema.sql', false);
-                } else if (error) {
-                    showResult('❌ Erreur: ' + error.message, false);
-                } else {
-                    showResult('✅ Tables créées et accessibles');
-                }
+                // Test simple : essayer de lire 1 document dans 'users' et 'contacts'
+                const uSnap = await getDocs(query(collection(db, 'users'), limit(1)));
+                const cSnap = await getDocs(query(collection(db, 'contacts'), limit(1)));
+                showResult('✅ Lecture Firestore testée. users:' + uSnap.size + ' contacts:' + cSnap.size);
             } catch (error) {
-                showResult('❌ Erreur: ' + error.message, false);
+                showResult('❌ Erreur lecture Firestore: ' + (error.message || error), false);
             }
         }
     </script>

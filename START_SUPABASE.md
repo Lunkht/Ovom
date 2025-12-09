@@ -1,51 +1,14 @@
-# 🚀 Démarrage Rapide avec Supabase
+# 🚀 (Historique) Démarrage Supabase
 
-## ✅ Configuration déjà faite !
+> **Note :** Ce projet a été migré vers **Firebase**. Ces instructions Supabase sont conservées pour référence historique. Pour la configuration actuelle, consultez `js/firebase-config.js` et `QUICK_START.md`.
 
-Vos clés Supabase sont déjà configurées dans le projet :
-- **Project URL**: https://htzwapislazbjngzoffh.supabase.co
-- **API Key**: Configurée dans `js/supabase-config.js`
+## Si vous commencez aujourd'hui (Firebase)
 
-## 📋 Étape unique : Créer les tables (2 minutes)
+1. Créez un projet dans la Console Firebase : https://console.firebase.google.com/
+2. Activez `Authentication` (Email/Password), `Firestore` et `Storage`.
+3. Ouvrez `js/firebase-config.js` et remplacez la configuration par vos clés.
+4. Pour des tests locaux rapides, utilisez les règles permissives `firebase.rules.dev` (développement uniquement).
 
-1. Allez sur [supabase.com/dashboard](https://supabase.com/dashboard)
-2. Sélectionnez votre projet **Ovom**
-3. Cliquez sur **SQL Editor** dans le menu de gauche
-4. Cliquez sur **"New query"**
-5. Copiez tout le contenu du fichier **`supabase-schema.sql`**
-6. Collez-le dans l'éditeur
-7. Cliquez sur **"Run"** (ou Ctrl+Enter)
+## Si vous avez besoin des assets Supabase (historique)
 
-## 🧪 Tester immédiatement
-
-1. Lancez un serveur local :
-   ```bash
-   python -m http.server 8000
-   ```
-
-2. Ouvrez `http://localhost:8000/test-supabase.html`
-3. Cliquez sur les 3 boutons de test
-4. Tout doit être ✅ vert
-
-5. Testez l'inscription :
-   - Allez sur `signup.html`
-   - Créez un compte
-   - Vous serez redirigé vers le dashboard
-
-## 🎯 C'est tout !
-
-Contrairement à Firebase, Supabase est **immédiatement prêt** :
-- ✅ Pas de configuration complexe
-- ✅ Une seule étape (créer les tables)
-- ✅ Interface simple et claire
-- ✅ Fonctionne en 2 minutes
-
-## 📚 Documentation
-
-- **SUPABASE_SETUP.md** - Guide détaillé
-- **supabase-schema.sql** - Script SQL à exécuter
-- **test-supabase.html** - Page de test
-
----
-
-**Supabase > Firebase pour la simplicité ! 🎉**
+Les scripts SQL et guides Supabase restent dans le dépôt (`supabase-schema.sql`, `SUPABASE_SETUP.md`) pour référence.

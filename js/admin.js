@@ -1,58 +1,66 @@
-import { supabase } from './supabase-config.js';
+import { auth, db, storage } from './firebase-config.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
+import { doc, getDoc, getDocs, collection, query, orderBy, where, addDoc, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-storage.js';
 
-// Helper: get current user session
-async function getSession() {
-  const { data } = await supabase.auth.getSession();
-  return data?.session ?? null;
-}
-
-// Check if current user is an admin (reads users table)
+// Check if current user is an admin (reads users collection)
 export async function isAdminUser() {
-  const session = await getSession();
-  if (!session) return false;
-  const userId = session.user.id;
-  const { data, error } = await supabase.from('users').select('is_admin').eq('id', userId).single();
-  if (error) {
-    console.error('isAdmin check error', error);
-    return false;
-  }
-  return data?.is_admin === true;
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return resolve(false);
+      try {
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        if (!snap.exists()) return resolve(false);
+        const data = snap.data();
+        resolve(data?.is_admin === true);
+      } catch (err) {
+        console.error('isAdmin check error', err);
+        resolve(false);
+      }
+    });
+  });
 }
 
 async function loadEstablishments() {
-  const { data, error } = await supabase.from('establishments').select('*').order('created_at', { ascending: false });
-  const container = document.getElementById('estList');
-  if (error) {
-    container.innerText = 'Erreur lors du chargement : ' + error.message;
-    return;
-  }
-  if (!data || data.length === 0) {
-    container.innerText = 'Aucun établissement.';
-    return;
-  }
-  container.innerHTML = '';
-  data.forEach(e => {
-    const el = document.createElement('div');
-    el.className = 'feature-card';
-    el.style.marginBottom = '12px';
-    el.innerHTML = `
-      <h4 style="margin:0 0 6px 0">${escapeHtml(e.name)} <small style="color:#666;font-weight:400">(${escapeHtml(e.type)})</small></h4>
-      <div style="font-size:0.95rem;color:#444">${escapeHtml(e.address || '')} ${e.city ? ' - ' + escapeHtml(e.city) : ''}</div>
-      <div style="margin-top:6px"><button data-id="${e.id}" class="btn btn-secondary edit-btn">Éditer</button> <button data-id="${e.id}" class="btn delete-btn">Supprimer</button></div>
-    `;
-    container.appendChild(el);
-  });
-
-  // attach delete handlers
-  container.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const id = btn.getAttribute('data-id');
-      if (!confirm('Supprimer cet établissement ?')) return;
-      const { error } = await supabase.from('establishments').delete().eq('id', id);
-      if (error) return alert('Erreur: ' + error.message);
-      loadEstablishments();
+  try {
+    const q = query(collection(db, 'establishments'), orderBy('created_at', 'desc'));
+    const snap = await getDocs(q);
+    const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const container = document.getElementById('estList');
+    if (!data || data.length === 0) {
+      container.innerText = 'Aucun établissement.';
+      return;
+    }
+    container.innerHTML = '';
+    data.forEach(e => {
+      const el = document.createElement('div');
+      el.className = 'feature-card';
+      el.style.marginBottom = '12px';
+      el.innerHTML = `
+        <h4 style="margin:0 0 6px 0">${escapeHtml(e.name)} <small style="color:#666;font-weight:400">(${escapeHtml(e.type)})</small></h4>
+        <div style="font-size:0.95rem;color:#444">${escapeHtml(e.address || '')} ${e.city ? ' - ' + escapeHtml(e.city) : ''}</div>
+        <div style="margin-top:6px"><button data-id="${e.id}" class="btn btn-secondary edit-btn">Éditer</button> <button data-id="${e.id}" class="btn delete-btn">Supprimer</button></div>
+      `;
+      container.appendChild(el);
     });
-  });
+
+    // attach delete handlers
+    container.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        if (!confirm('Supprimer cet établissement ?')) return;
+        try {
+          await deleteDoc(doc(db, 'establishments', id));
+          loadEstablishments();
+        } catch (err) {
+          alert('Erreur: ' + (err.message || err));
+        }
+      });
+    });
+  } catch (err) {
+    const container = document.getElementById('estList');
+    if (container) container.innerText = 'Erreur lors du chargement : ' + (err.message || err);
+  }
 }
 
 function escapeHtml(s) { return (s || '').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
@@ -60,11 +68,10 @@ function escapeHtml(s) { return (s || '').toString().replace(/[&<>"']/g, c => ({
 // Image upload helper (optional). Requires bucket 'establishments' in Supabase Storage.
 async function uploadImage(file, id) {
   try {
-    const path = `establishments/${id}/${file.name}`;
-    const { data, error: uploadError } = await supabase.storage.from('establishments').upload(path, file, { cacheControl: '3600', upsert: false });
-    if (uploadError) throw uploadError;
-    const { publicURL } = supabase.storage.from('establishments').getPublicUrl(path);
-    return publicURL;
+    const r = storageRef(storage, `establishments/${id}/${file.name}`);
+    await uploadBytes(r, file);
+    const url = await getDownloadURL(r);
+    return url;
   } catch (err) {
     console.warn('Upload image failed', err);
     return null;
@@ -117,26 +124,29 @@ document.addEventListener('DOMContentLoaded', async () => {
       payload.longitude = lng;
     }
 
-    // insert row
-    const { data, error } = await supabase.from('establishments').insert([payload]).select().single();
-    if (error) {
-      msg.style.color = 'red';
-      msg.innerText = 'Erreur: ' + error.message;
-      return;
-    }
+    // insert row in Firestore
+    try {
+      const docRef = await addDoc(collection(db, 'establishments'), {
+        ...payload,
+        created_at: new Date().toISOString()
+      });
 
-    // handle optional image
-    const fileInput = document.getElementById('image');
-    if (fileInput && fileInput.files && fileInput.files[0]) {
-      const publicUrl = await uploadImage(fileInput.files[0], data.id);
-      if (publicUrl) {
-        await supabase.from('establishments').update({ image_url: publicUrl }).eq('id', data.id);
+      // handle optional image
+      const fileInput = document.getElementById('image');
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        const publicUrl = await uploadImage(fileInput.files[0], docRef.id);
+        if (publicUrl) {
+          await updateDoc(doc(db, 'establishments', docRef.id), { image_url: publicUrl });
+        }
       }
-    }
 
-    msg.style.color = 'green';
-    msg.innerText = 'Établissement ajouté.';
-    form.reset();
-    await loadEstablishments();
+      msg.style.color = 'green';
+      msg.innerText = 'Établissement ajouté.';
+      form.reset();
+      await loadEstablishments();
+    } catch (err) {
+      msg.style.color = 'red';
+      msg.innerText = 'Erreur: ' + (err.message || err);
+    }
   });
 });

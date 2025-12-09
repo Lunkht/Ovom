@@ -2,12 +2,9 @@
 
 ## ✅ Vos clés Supabase sont déjà configurées !
 
-- **Project URL**: https://htzwapislazbjngzoffh.supabase.co
-- **API Key**: Déjà configurée dans `js/supabase-config.js`
+> **Note :** Ce projet a été migré vers **Firebase**. Les fichiers et guides Supabase sont conservés pour historique et migration éventuelle, mais le code actif utilise maintenant Firebase (voir `js/firebase-config.js`).
 
 ## 📋 Étape 1 : Créer les tables (2 minutes)
-
-1. Allez sur [https://supabase.com/dashboard](https://supabase.com/dashboard)
 2. Sélectionnez votre projet **Ovom**
 3. Dans le menu de gauche, cliquez sur **SQL Editor**
 4. Cliquez sur **"New query"**

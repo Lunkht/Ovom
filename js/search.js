@@ -1,15 +1,21 @@
-import { supabase } from './supabase-config.js';
+import { db } from './firebase-config.js';
+import { collection, query, orderBy, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
 
 async function fetchEstablishments({ q = '', type = '' } = {}) {
-  let query = supabase.from('establishments').select('*').order('created_at', { ascending: false });
-  if (type) query = query.eq('type', type);
-  if (q) {
-    // simple ilike filter on name and city
-    query = query.or(`name.ilike.%${q}%,city.ilike.%${q}%`);
+  try {
+    let qref = query(collection(db, 'establishments'), orderBy('created_at', 'desc'));
+    // Firestore doesn't support complex OR queries easily without index; we'll fetch and filter client-side for simplicity
+    const snap = await getDocs(qref);
+    let data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (type) data = data.filter(d => (d.type || '').toLowerCase() === type.toLowerCase());
+    if (q) {
+      const term = q.toLowerCase();
+      data = data.filter(d => ((d.name||'') + ' ' + (d.city||'') ).toLowerCase().includes(term));
+    }
+    return data;
+  } catch (err) {
+    throw err;
   }
-  const { data, error } = await query;
-  if (error) throw error;
-  return data || [];
 }
 
 function renderResults(list) {

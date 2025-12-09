@@ -1,0 +1,21 @@
+// Firestore rules for local/dev testing ONLY.
+// WARNING: These rules are intentionally permissive to simplify development.
+// Do NOT use in production. Replace with stricter rules before deploying.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow full read/write for these collections in dev
+    match /users/{docId} {
+      allow read, write: if true;
+    }
+    match /establishments/{docId} {
+      allow read, write: if true;
+    }
+    match /contacts/{docId} {
+      allow read, write: if true;
+    }
+    // Default: allow read for everything else in dev
+    match /{document=**} {
+      allow read: if true;
+    }
+  }
+}

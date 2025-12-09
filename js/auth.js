@@ -1,34 +1,27 @@
-// Gestion de l'authentification avec Supabase
-import { supabase } from './supabase-config.js';
+// Gestion de l'authentification avec Firebase
+import { auth, db } from './firebase-config.js';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
+import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
 
 // Fonction d'inscription
 export async function signup(name, email, password, phone = '', address = '') {
     try {
-        // Créer l'utilisateur avec Supabase Auth
-        const { data: authData, error: authError } = await supabase.auth.signUp({
+        // Créer l'utilisateur avec Firebase Auth
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const user = cred.user;
+
+        // Enregistrer les informations supplémentaires dans Firestore (collection 'users')
+        await setDoc(doc(db, 'users', user.uid), {
+            id: user.uid,
+            name: name,
             email: email,
-            password: password,
+            phone: phone,
+            address: address,
+            is_admin: false,
+            created_at: new Date().toISOString()
         });
 
-        if (authError) throw authError;
-
-        // Enregistrer les informations supplémentaires dans la table users
-        const { error: dbError } = await supabase
-            .from('users')
-            .insert([
-                {
-                    id: authData.user.id,
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    address: address,
-                    created_at: new Date().toISOString()
-                }
-            ]);
-
-        if (dbError) throw dbError;
-
-        return { success: true, user: authData.user };
+        return { success: true, user };
     } catch (error) {
         return { success: false, error: error.message };
     }
@@ -37,14 +30,8 @@ export async function signup(name, email, password, phone = '', address = '') {
 // Fonction de connexion
 export async function login(email, password) {
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password,
-        });
-
-        if (error) throw error;
-
-        return { success: true, user: data.user };
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        return { success: true, user: cred.user };
     } catch (error) {
         return { success: false, error: error.message };
     }
@@ -53,8 +40,7 @@ export async function login(email, password) {
 // Fonction de déconnexion
 export async function logout() {
     try {
-        const { error } = await supabase.auth.signOut();
-        if (error) throw error;
+        await signOut(auth);
         return { success: true };
     } catch (error) {
         return { success: false, error: error.message };
@@ -63,29 +49,18 @@ export async function logout() {
 
 // Vérifier l'état de connexion
 export function checkAuthState(callback) {
-    // Vérifier l'utilisateur actuel
-    supabase.auth.getSession().then(({ data: { session } }) => {
-        callback(session?.user ?? null);
-    });
-
-    // Écouter les changements d'état
-    supabase.auth.onAuthStateChange((event, session) => {
-        callback(session?.user ?? null);
+    // Écouter les changements d'état via Firebase
+    onAuthStateChanged(auth, (user) => {
+        callback(user ?? null);
     });
 }
 
 // Obtenir les données utilisateur
 export async function getUserData(userId) {
     try {
-        const { data, error } = await supabase
-            .from('users')
-            .select('*')
-            .eq('id', userId)
-            .single();
-
-        if (error) throw error;
-
-        return { success: true, data: data };
+        const snap = await getDoc(doc(db, 'users', userId));
+        if (!snap.exists()) return { success: false, error: 'Utilisateur introuvable' };
+        return { success: true, data: snap.data() };
     } catch (error) {
         return { success: false, error: error.message };
     }

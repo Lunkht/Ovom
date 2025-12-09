@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Supabase - Ovom</title>
+    <title>Test Firebase - Ovom</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,13 +62,13 @@
 <body>
     <main class="test-page">
         <div class="container">
-            <h1 class="test-title">🧪 Test de Configuration Supabase</h1>
-            <p class="test-subtitle">Utilisez cette page pour vérifier que Supabase est correctement configuré.</p>
+            <h1 class="test-title">🧪 Test de Configuration Firebase</h1>
+            <p class="test-subtitle">Utilisez cette page pour vérifier que Firebase (Firestore / Auth / Storage) est correctement configuré.</p>
 
             <div class="test-actions">
-                <button onclick="testSupabaseConnection()" class="btn btn-primary">Tester la Connexion Supabase</button>
-                <button onclick="testAuth()" class="btn btn-secondary">Tester l'Authentification</button>
-                <button onclick="testDatabase()" class="btn btn-primary">Tester la Base de Données</button>
+                <button onclick="testSupabaseConnection()" class="btn btn-primary">Tester la Connexion Firebase</button>
+                <button onclick="testAuth()" class="btn btn-secondary">Tester l'Authentification (Firebase)</button>
+                <button onclick="testDatabase()" class="btn btn-primary">Tester la Base de Données (Firestore)</button>
             </div>
 
             <div id="results" class="test-results">
@@ -118,7 +118,10 @@
         <img src="https://img.icons8.com/ios-filled/50/000000/up.png" alt="Scroll to top">
     </button>
     <script type="module">
-        import { supabase } from './js/supabase-config.js';
+        import { testConnection, db } from './js/firebase-config.js';
+        import { collection, getDocs, query, limit } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
+        import { auth } from './js/firebase-config.js';
 
         const resultsDiv = document.getElementById('results');
 
@@ -132,79 +135,45 @@
         window.testSupabaseConnection = async function() {
             resultsDiv.innerHTML = '';
             try {
-                // Test de connexion basique
-                const { data, error } = await supabase.from('users').select('count', { count: 'exact', head: true });
-                
-                if (error && error.code === 'PGRST116') {
-                    showResult('⚠️ Table "users" n\'existe pas encore', 'error');
-                    showResult('💡 Exécutez le script SQL dans Supabase Dashboard', 'info');
-                } else if (error) {
-                    throw error;
+                const res = await testConnection();
+                if (res.ok) {
+                    showResult('✅ Firebase initialisé (connectivité OK)', 'success');
                 } else {
-                    showResult('✅ Supabase connecté avec succès !', 'success');
-                    showResult(`📊 Project URL: https://htzwapislazbjngzoffh.supabase.co`, 'info');
+                    showResult('⚠️ Test connexion: ' + (res.error || 'erreur inconnue'), 'error');
                 }
             } catch (error) {
-                showResult(`❌ Erreur de connexion: ${error.message}`, 'error');
-                showResult('💡 Vérifiez vos clés dans supabase-config.js', 'info');
+                showResult(`❌ Erreur de connexion: ${error.message || error}`, 'error');
             }
         }
 
         window.testAuth = async function() {
             resultsDiv.innerHTML = '';
             try {
-                // Test de l'authentification
-                const { data: { session }, error } = await supabase.auth.getSession();
-                
-                if (error) throw error;
-                
-                if (session) {
-                    showResult('✅ Utilisateur connecté !', 'success');
-                    showResult(`👤 Email: ${session.user.email}`, 'info');
-                } else {
-                    showResult('ℹ️ Aucun utilisateur connecté', 'info');
-                    showResult('💡 Testez l\'inscription sur signup.html', 'info');
-                }
-                
-                showResult('✅ Module Authentication fonctionne !', 'success');
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        showResult('✅ Utilisateur connecté !', 'success');
+                        showResult(`👤 Email: ${user.email}`, 'info');
+                    } else {
+                        showResult('ℹ️ Aucun utilisateur connecté', 'info');
+                        showResult('💡 Testez l\'inscription sur signup.html', 'info');
+                    }
+                });
+                showResult('✅ Module Authentication (Firebase) écoutant les changements', 'success');
             } catch (error) {
-                showResult(`❌ Erreur Authentication: ${error.message}`, 'error');
-                showResult('💡 Vérifiez la configuration dans Supabase Dashboard', 'info');
+                showResult(`❌ Erreur Authentication: ${error.message || error}`, 'error');
             }
         }
 
         window.testDatabase = async function() {
             resultsDiv.innerHTML = '';
             try {
-                // Test de la base de données
-                const { data: users, error: usersError } = await supabase
-                    .from('users')
-                    .select('count', { count: 'exact', head: true });
-                
-                if (usersError && usersError.code === 'PGRST116') {
-                    showResult('❌ Table "users" n\'existe pas', 'error');
-                    showResult('💡 Exécutez le script supabase-schema.sql', 'info');
-                    return;
-                }
-                
-                if (usersError) throw usersError;
-                
-                showResult('✅ Table "users" existe !', 'success');
-                
-                // Test table contacts
-                const { data: contacts, error: contactsError } = await supabase
-                    .from('contacts')
-                    .select('count', { count: 'exact', head: true });
-                
-                if (contactsError) throw contactsError;
-                
-                showResult('✅ Table "contacts" existe !', 'success');
-                showResult('✅ Base de données configurée correctement !', 'success');
-                showResult('💡 Vous pouvez maintenant tester l\'inscription', 'info');
-                
+                const uSnap = await getDocs(query(collection(db, 'users'), limit(1)));
+                const cSnap = await getDocs(query(collection(db, 'contacts'), limit(1)));
+                showResult('✅ Firestore accessible. users:' + uSnap.size + ' contacts:' + cSnap.size, 'success');
+                showResult('💡 Firestore: test de lecture simple terminé', 'info');
             } catch (error) {
-                showResult(`❌ Erreur Base de données: ${error.message}`, 'error');
-                showResult('💡 Exécutez le script SQL dans Supabase Dashboard', 'info');
+                showResult(`❌ Erreur Base de données (Firestore): ${error.message || error}`, 'error');
+                showResult('💡 Vérifiez les règles de sécurité Firestore et la configuration', 'info');
             }
         }
     </script>
