@@ -99,6 +99,18 @@
     padding: 1rem;
 }
 
+/* When the image column is removed, use the "centered" modifier
+   to center the form and constrain its width. */
+.auth-wrapper.centered {
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.auth-wrapper.centered .auth-form-container {
+    max-width: 520px;
+    width: 100%;
+}
+
 .auth-form-container {
     background: #fff;
     padding: 36px;
