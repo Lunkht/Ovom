@@ -749,3 +749,22 @@ header nav {
         padding: 20px;
     }
 }
+
+/* App Screen */
+.app-screen-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.app-screen {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .app-screen {
+        max-width: 100%;
+    }
+}
