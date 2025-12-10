@@ -35,12 +35,17 @@ export function updateNavForAuth() {
         if (!navLinks) return;
 
         if (user) {
-            // Utilisateur connecté - Afficher Dashboard et Déconnexion
+            // Utilisateur connecté - Afficher Dashboard (icône) et Déconnexion
             navLinks.innerHTML = `
+                <li><a href="index.html">Accueil</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">À propos</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="dashboard.html">Mon compte</a></li>
+                <li>
+                    <a href="dashboard.html" title="Mon Compte" class="user-icon-link">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/user--v1.png" alt="Mon Compte" style="vertical-align: middle;">
+                    </a>
+                </li>
                 <li><a href="#" id="logoutBtn" class="btn btn-secondary">Déconnexion</a></li>
             `;
 
@@ -59,6 +64,7 @@ export function updateNavForAuth() {
         } else {
             // Utilisateur non connecté - Afficher Connexion et Inscription
             navLinks.innerHTML = `
+                <li><a href="index.html">Accueil</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">À propos</a></li>
                 <li><a href="contact.html">Contact</a></li>
