@@ -1607,7 +1607,7 @@ body:not(.home-page) header {
 }
 
 
-.download_btn-primary {
+.download-btn-primary {
     background-color: var(--white-text);
     color: var(--primary-color);
     padding: 15px 30px;
