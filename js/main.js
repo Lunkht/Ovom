@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (navLinks && mobileMenuToggle) {
             const isClickInsideNav = navLinks.contains(e.target);
             const isClickOnToggle = mobileMenuToggle.contains(e.target);
-            
+
             if (!isClickInsideNav && !isClickOnToggle && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
                 mobileMenuToggle.classList.remove('active');
@@ -94,54 +94,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-        // Newsletter signup handling
-        document.addEventListener('DOMContentLoaded', () => {
-            const newsletterForm = document.getElementById('newsletterForm');
-            if (!newsletterForm) return;
+    // Newsletter signup handling
+    document.addEventListener('DOMContentLoaded', () => {
+        const newsletterForm = document.getElementById('newsletterForm');
+        if (!newsletterForm) return;
 
-            newsletterForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const input = document.getElementById('newsletterEmail');
-                const email = input && input.value.trim();
-                const errorColor = '#c0392b';
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('newsletterEmail');
+            const email = input && input.value.trim();
+            const errorColor = '#c0392b';
 
-                function isValidEmail(email) {
-                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-                }
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
 
-                if (!email || !isValidEmail(email)) {
-                    // simple inline feedback
-                    input.style.borderColor = errorColor;
-                    input.focus();
-                    return;
-                }
+            if (!email || !isValidEmail(email)) {
+                // simple inline feedback
+                input.style.borderColor = errorColor;
+                input.focus();
+                return;
+            }
 
-                // Store locally (as demo). In real app send to server or supabase table.
-                try {
-                    const stored = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
-                    if (!stored.includes(email)) stored.push(email);
-                    localStorage.setItem('newsletterSubscribers', JSON.stringify(stored));
-                } catch (err) {
-                    try { localStorage.setItem('newsletterSubscribers', JSON.stringify([email])); } catch (e) {}
-                }
+            // Store locally (as demo). In real app send to server or supabase table.
+            try {
+                const stored = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+                if (!stored.includes(email)) stored.push(email);
+                localStorage.setItem('newsletterSubscribers', JSON.stringify(stored));
+            } catch (err) {
+                try { localStorage.setItem('newsletterSubscribers', JSON.stringify([email])); } catch (e) { }
+            }
 
-                // Replace form with a thank you message
-                const parent = newsletterForm.parentElement;
-                if (parent) {
-                    const msg = document.createElement('p');
-                    msg.textContent = 'Merci ! Votre adresse a été enregistrée.';
-                    msg.style.color = '#2a9d8f';
-                    msg.style.marginTop = '8px';
-                    newsletterForm.replaceWith(msg);
-                }
-            });
+            // Replace form with a thank you message
+            const parent = newsletterForm.parentElement;
+            if (parent) {
+                const msg = document.createElement('p');
+                msg.textContent = 'Merci ! Votre adresse a été enregistrée.';
+                msg.style.color = '#2a9d8f';
+                msg.style.marginTop = '8px';
+                newsletterForm.replaceWith(msg);
+            }
         });
+    });
 
     // Smooth scrolling for navigation links
     const allNavLinks = document.querySelectorAll('header .nav-links a[href^="#"]');
 
     allNavLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
 
             const targetId = this.getAttribute('href');
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Scroll to top button
 const scrollTopBtn = document.getElementById('scrollTopBtn');
 
-window.onscroll = function() {
+window.onscroll = function () {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         scrollTopBtn.style.display = 'block';
     } else {
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (cookieAcceptBtn) {
         cookieAcceptBtn.addEventListener('click', () => {
-            try { localStorage.setItem('cookieConsent', 'accepted'); } catch (e) {}
+            try { localStorage.setItem('cookieConsent', 'accepted'); } catch (e) { }
             setCookie('cookieConsent', 'accepted', 365);
             if (cookieBanner) cookieBanner.style.display = 'none';
         });
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (cookieDeclineBtn) {
         cookieDeclineBtn.addEventListener('click', () => {
-            try { localStorage.setItem('cookieConsent', 'declined'); } catch (e) {}
+            try { localStorage.setItem('cookieConsent', 'declined'); } catch (e) { }
             setCookie('cookieConsent', 'declined', 365);
             if (cookieBanner) cookieBanner.style.display = 'none';
         });
@@ -270,9 +270,17 @@ function toggleTheme() {
 function updateThemeIcon(theme) {
     const toggleBtn = document.getElementById('themeToggle');
     if (toggleBtn) {
-        // Simple text/emoji generic icon update, can be refined with actual icons
-        toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
-        toggleBtn.setAttribute('aria-label', theme === 'dark' ? 'Activer le mode clair' : 'Activer le mode sombre');
+        if (theme === 'dark') {
+            // Sun icon for dark mode (to switch to light)
+            toggleBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+            toggleBtn.setAttribute('aria-label', 'Activer le mode clair');
+            toggleBtn.style.color = '#fff'; // White sun in dark mode
+        } else {
+            // Moon icon for light mode (to switch to dark)
+            toggleBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+            toggleBtn.setAttribute('aria-label', 'Activer le mode sombre');
+            toggleBtn.style.color = '#333'; // Dark moon in light mode
+        }
     }
 }
 
