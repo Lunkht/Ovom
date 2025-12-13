@@ -10,6 +10,55 @@
     --dark-text: #333;
     --white-text: #fff;
     --white-move: #eeeded;
+    --card-bg: #fff;
+    --input-bg: #fff;
+    --input-border: #dde7e5;
+}
+
+[data-theme="dark"] {
+    --primary-color: #3ab0a0;
+    --secondary-color: #1a3a47;
+    --light-bg: #121212;
+    --dark-text: #e0e0e0;
+    --white-text: #e0e0e0;
+    --white-move: #1e1e1e;
+    --card-bg: #2d2d2d;
+    --input-bg: #333;
+    --input-border: #444;
+}
+
+[data-theme="dark"] body {
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+}
+
+[data-theme="dark"] header .container {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .testimonial-card,
+[data-theme="dark"] .auth-form-container,
+[data-theme="dark"] .form-container {
+    background-color: var(--card-bg);
+    color: var(--dark-text);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .feature-card:hover {
+    background-color: #3a3a3a;
+}
+
+[data-theme="dark"] input, 
+[data-theme="dark"] textarea, 
+[data-theme="dark"] select {
+    background-color: var(--input-bg);
+    color: var(--white-text);
+    border-color: var(--input-border);
+}
+
+[data-theme="dark"] .bg-light {
+    background-color: #1a1a1a;
 }
 
 /* Small screen adaptations for footer-title and app-screen */

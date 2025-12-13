@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prendre Rendez-vous - Ovom</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .auth-form-container {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Ovom</a>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Tableau de Bord</a></li>
+                <li><a href="#" id="logoutBtn" class="btn btn-secondary">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="auth-page">
+            <div class="auth-form-container">
+                <h1>Prendre Rendez-vous</h1>
+                <p>Remplissez le formulaire ci-dessous pour planifier une consultation.</p>
+
+                <form id="appointmentForm">
+                    <div class="form-group">
+                        <label for="doctor">Spécialité / Médecin</label>
+                        <select id="doctor" required>
+                            <option value="">Choisir...</option>
+                            <option value="Generaliste Dr. Diallo">Généraliste - Dr. Diallo</option>
+                            <option value="Pediatre Dr. Sow">Pédiatre - Dr. Sow</option>
+                            <option value="Cardiologue Dr. Camara">Cardiologue - Dr. Camara</option>
+                            <option value="Gynecologue Dr. Keita">Gynécologue - Dr. Keita</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Heure</label>
+                        <select id="time" required>
+                            <option value="">Choisir...</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">Motif de la consultation</label>
+                        <textarea id="reason" rows="3" placeholder="Décrivez brièvement vos symptômes..."
+                            required></textarea>
+                    </div>
+
+                    <div class="auth-footer">
+                        <button type="submit" class="btn btn-primary btn-block">Confirmer le Rendez-vous</button>
+                    </div>
+                </form>
+                <div id="messageArea" style="margin-top: 20px; text-align: center;"></div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="dashboard.html">Retour au tableau de bord</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script type="module">
+        import { checkAuthState, logout } from './js/auth.js';
+        import { createAppointment } from './js/appointments.js';
+
+        let currentUser = null;
+
+        // Auth Check
+        checkAuthState((user) => {
+            if (user) {
+                currentUser = user;
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            await logout();
+            window.location.href = 'index.html';
+        });
+
+        // Setup clear/minimum date
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        // Form Submission
+        document.getElementById('appointmentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!currentUser) return;
+
+            const doctor = document.getElementById('doctor').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const reason = document.getElementById('reason').value;
+            const msgArea = document.getElementById('messageArea');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+
+            msgArea.textContent = 'Traitement en cours...';
+            msgArea.style.color = 'blue';
+            submitBtn.disabled = true;
+
+            const result = await createAppointment(currentUser.uid, doctor, date, time, reason);
+
+            if (result.success) {
+                msgArea.textContent = 'Rendez-vous confirmé avec succès !';
+                msgArea.style.color = 'green';
+                e.target.reset();
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            } else {
+                msgArea.textContent = 'Erreur: ' + result.error;
+                msgArea.style.color = 'red';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
