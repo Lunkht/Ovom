@@ -1450,6 +1450,48 @@ body:not(.home-page) header {
         justify-content: center;
     }
 
+    /* Contact Page Mobile */
+    .contact-wrapper {
+        display: flex;
+        /* Switch to flex column for better control, or stick to grid 1fr */
+        flex-direction: column;
+        grid-template-columns: 1fr;
+        /* Fallback */
+        gap: 30px;
+        width: 100%;
+    }
+
+    .contact-form,
+    .contact-info {
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        /* Prevent padding overflow */
+        margin: 0;
+    }
+
+    .hero-contact {
+        height: auto;
+        /* Allow content to dictate height */
+        min-height: 300px;
+        margin: 10px;
+        /* Reduce margin */
+        padding: 60px 20px;
+        background-attachment: scroll;
+        /* Fix mobile background scroll issues */
+    }
+
+    .hero-contact h1 {
+        font-size: 2rem;
+        word-wrap: break-word;
+        /* Prevent text overflow */
+    }
+
+    .hero-contact p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
     .btn-schedule {
         width: 100%;
         justify-content: center;
