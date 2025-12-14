@@ -93,10 +93,7 @@
     background-color: #000;
 }
 
-[data-theme="dark"] .app-screen {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-}
+
 
 [data-theme="dark"] .app-text h3 {
     color: #fff;
@@ -1736,22 +1733,6 @@ body:not(.home-page) header {
         /* Full width buttons */
     }
 }
-
-.app-screen {
-    background-color: rgb(230, 243, 230);
-    padding: 40px;
-}
-
-.app-text {
-    padding: 30px;
-    opacity: 0;
-    /* Initial state for animation */
-    animation: fadeInLeft 1s ease-out forwards;
-    /* Apply animation */
-    animation-delay: 0.2s;
-    /* Add a slight delay */
-}
-
 
 .download-btn-primary {
     background-color: var(--white-text);
