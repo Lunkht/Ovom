@@ -676,7 +676,7 @@ header nav {
         top: 60px;
         right: -100%;
         flex-direction: column;
-        background: white;
+        background: var(--card-bg);
         width: 70%;
         max-width: 300px;
         height: calc(100vh - 60px);
@@ -685,6 +685,7 @@ header nav {
         transition: right 0.3s ease;
         align-items: flex-start;
         overflow-y: auto;
+        z-index: 1000;
     }
 
     .nav-links.active {
@@ -693,6 +694,21 @@ header nav {
 
     .dashboard-sidebar-toggle {
         display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1002;
+    }
+
+    /* Clarify alignment for header elements on mobile */
+    header nav {
+        height: 60px;
+        padding: 0 15px;
+        justify-content: space-between;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        z-index: 1002;
     }
 
     .dashboard-sidebar {
