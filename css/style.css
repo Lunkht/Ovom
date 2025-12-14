@@ -1151,65 +1151,87 @@ body:not(.home-page) header {
     .page-hero .container {
         max-width: 1100px;
         width: 100%;
-
-        /* Timeline adaptation for mobile */
-        .timeline {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 0 0.5rem;
-        }
-
-        .timeline-item {
-            width: 100%;
-            left: 0 !important;
-            padding: 10px 0;
-            margin-bottom: 1.5rem;
-        }
-
-        .timeline-content {
-            padding: 16px 12px;
-            border-radius: 8px;
-            text-align: left;
-        }
-
-        .timeline-date {
-            display: block;
-            font-weight: bold;
-            color: #2a9d8f;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-        }
-
-        .timeline-title {
-            font-size: 1.2rem;
-            margin-bottom: 4px;
-        }
-
-        .timeline-desc {
-            font-size: 1rem;
-            color: #333;
-        }
-
-        .timeline::after {
-            left: 18px;
-            width: 3px;
-            margin-left: 0;
-        }
-
-        .timeline-item::after {
-            left: 0;
-            right: auto;
-            top: 18px;
-            width: 18px;
-            height: 18px;
-            border-width: 3px;
-        }
-
         padding-left: 0;
-        /* remove horizontal gutter inside hero */
         padding-right: 0;
-        /* remove horizontal gutter inside hero */
         box-sizing: border-box;
+    }
+
+    /* Timeline adaptation for mobile */
+    .timeline {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+
+    .timeline-item {
+        width: 100% !important;
+        left: 0 !important;
+        padding-left: 50px;
+        /* Space for the line */
+        padding-right: 10px;
+        margin-bottom: 2rem;
+        box-sizing: border-box;
+    }
+
+    /* Override odd/even positioning from desktop */
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        left: 0 !important;
+    }
+
+    .timeline-content {
+        padding: 20px;
+        border-radius: 12px;
+        text-align: left;
+        background: var(--light-bg);
+        /* Ensure contrast */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Subtle lift */
+    }
+
+    .timeline-date {
+        display: block;
+        font-weight: bold;
+        color: var(--primary-color);
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+    }
+
+    .timeline-title {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+        color: var(--dark-text);
+    }
+
+    .timeline-desc {
+        font-size: 1rem;
+        color: var(--dark-text);
+        line-height: 1.5;
+    }
+
+    /* Vertical Line moved to left */
+    .timeline::after {
+        left: 20px;
+        width: 4px;
+        /* Slightly thicker */
+        margin-left: 0;
+        background-color: var(--primary-color);
+        box-shadow: none;
+    }
+
+    /* Dots on the line */
+    .timeline-item::after {
+        left: 13px;
+        /* Center on the 22px center of line (20px left + 2px half-width). 13px + 9px (half dot) = 22px. Perfect. */
+        right: auto;
+        top: 25px;
+        /* Align with content top */
+        width: 18px;
+        height: 18px;
+        border-width: 3px;
+        background-color: var(--card-bg);
+        border-color: var(--primary-color);
+        z-index: 2;
     }
 
     /* Ensure specific hero sections don't keep extra margin */
